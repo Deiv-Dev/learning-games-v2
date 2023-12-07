@@ -41,26 +41,34 @@ export default function Welcome({
                 <Container>
                     <Row>
                         <Col className="cards">
-                            <Button className="main-text" variant="primary">
-                                Žaidimai su skaičiais
-                            </Button>
+                            <Link href={route("find-numbers-game")}>
+                                <Button className="main-text" variant="primary">
+                                    Žaidimai su skaičiais
+                                </Button>
+                            </Link>
                         </Col>
                         <Col className="cards">
-                            <Button className="main-text" variant="primary">
-                                Žaidimai su spalvom
-                            </Button>
+                            <Link href={route("find-numbers-game")}>
+                                <Button className="main-text" variant="primary">
+                                    Žaidimai su spalvom
+                                </Button>
+                            </Link>
                         </Col>
                     </Row>
                     <Row>
                         <Col className="cards">
-                            <Button className="main-text" variant="primary">
-                                Žaidimai su raidėm
-                            </Button>
+                            <Link href={route("find-numbers-game")}>
+                                <Button className="main-text" variant="primary">
+                                    Žaidimai su raidėm
+                                </Button>
+                            </Link>
                         </Col>
                         <Col className="cards">
-                            <Button className="main-text" variant="primary">
-                                Žaidimai su žodžiais
-                            </Button>
+                            <Link href={route("find-numbers-game")}>
+                                <Button className="main-text" variant="primary">
+                                    Žaidimai su žodžiais
+                                </Button>
+                            </Link>
                         </Col>
                     </Row>
                 </Container>

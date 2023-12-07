@@ -23,17 +23,13 @@ export function chunkArrayToSmallerParts(
 
 export function addCurrentAnswerToArray(
     valuesInArray: number[],
-    valueToFindInArray: number,
-    setShuffledArray: React.Dispatch<React.SetStateAction<number[]>>
-): void {
+    valueToFindInArray: number
+): number[] {
     const numberExistsInArray = valuesInArray.includes(valueToFindInArray + 1);
 
     if (!numberExistsInArray) {
         const randomIndex = Math.floor(Math.random() * 9);
-        setShuffledArray((prevNumbers: number[]) => {
-            const newNumbers = [...prevNumbers];
-            newNumbers[randomIndex] = valueToFindInArray + 1;
-            return newNumbers;
-        });
+        valuesInArray[randomIndex] = valueToFindInArray + 1;
     }
+    return valuesInArray;
 }
