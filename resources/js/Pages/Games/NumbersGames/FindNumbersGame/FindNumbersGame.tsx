@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import {
     chunkArrayToSmallerParts,
@@ -9,9 +9,9 @@ import {
     numbersToFindInWords,
     numbersToShowOnCards,
 } from "./FindNumbersGameData";
-import "./FindNumbersGameStyle.scss";
 import { getRandomLightColor } from "@/Helpers/LightColorGeneratorHelper";
-import CardComponents from "@/Components/GameComponents/CardComponents";
+import CardComponents from "@/Components/GameComponents/CardComponent/CardComponent";
+import FeedbackMessageComponent from "@/Components/GameComponents/FeedbackMessageComponent/FeedbackMessageComponent";
 
 const FindNumbersGame = () => {
     const [currentNumberToFind, setCurrentNumberToFind] = useState<number>(0);
@@ -22,7 +22,7 @@ const FindNumbersGame = () => {
     const [cardsBackgroundColors, setCardsBackgroundColors] = useState<
         string[]
     >([]);
-    const [answerCorrect, setAnswerCorrect] = useState<boolean>(false);
+    const [answerCorrect, setAnswerCorrect] = useState<boolean | null>(null);
     const [gameOver, setGameOver] = useState<boolean>(false);
 
     useEffect(() => {
@@ -47,26 +47,41 @@ const FindNumbersGame = () => {
 
     const handleCardClick = (card: number): void => {
         if (currentNumberToFind + 1 === card) {
-            setCurrentNumberToFind((prevNumber) => prevNumber + 1);
+            setAnswerCorrect(true);
+            setTimeout(() => {
+                setCurrentNumberToFind((prevNumber) => prevNumber + 1);
+                setAnswerCorrect(null);
+                setCurrentNumberToFind((prevNumber) => {
+                    return prevNumber + 1;
+                });
+            }, 500);
+        } else {
+            setAnswerCorrect(false);
+            setTimeout(() => {
+                setAnswerCorrect(null);
+            }, 500);
         }
     };
 
     return (
-        <Container>
-            <Row>
-                <Col className="card" style={{ backgroundColor: "gray" }}>
-                    <p className="card__text">
-                        {numbersToFindInWords[currentNumberToFind]}
-                    </p>
-                </Col>
-            </Row>
-            <CardComponents
-                chunkedArray={chunkedArray}
-                cardsBackgroundColors={cardsBackgroundColors}
-                shuffledNumbersToShowOnCards={shuffledNumbersToShowOnCards}
-                handleCardClick={handleCardClick}
-            />
-        </Container>
+        <>
+            <Container>
+                <Row>
+                    <Col className="card" style={{ backgroundColor: "gray" }}>
+                        <p className="card__text">
+                            {numbersToFindInWords[currentNumberToFind]}
+                        </p>
+                    </Col>
+                </Row>
+                <CardComponents
+                    chunkedArray={chunkedArray}
+                    cardsBackgroundColors={cardsBackgroundColors}
+                    shuffledNumbersToShowOnCards={shuffledNumbersToShowOnCards}
+                    handleCardClick={handleCardClick}
+                />
+            </Container>
+            <FeedbackMessageComponent isCorrect={answerCorrect} />
+        </>
     );
 };
 
