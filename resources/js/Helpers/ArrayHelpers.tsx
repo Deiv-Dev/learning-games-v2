@@ -9,14 +9,18 @@ export function shuffleArray(arrayToShuffle: number[]): number[] {
 
 export function chunkArrayToSmallerParts(
     arrayToSplitToChunks: number[],
-    howManyChunks: number
+    howManyValuesInChunk: number
 ): number[][] {
     return Array.from(
-        { length: Math.ceil(arrayToSplitToChunks.length / howManyChunks) },
+        {
+            length: Math.ceil(
+                arrayToSplitToChunks.length / howManyValuesInChunk
+            ),
+        },
         (_, index) =>
             arrayToSplitToChunks.slice(
-                index * howManyChunks,
-                (index + 1) * howManyChunks
+                index * howManyValuesInChunk,
+                (index + 1) * howManyValuesInChunk
             )
     );
 }
@@ -28,7 +32,9 @@ export function addCurrentAnswerToArray(
     const numberExistsInArray = valuesInArray.includes(valueToFindInArray + 1);
 
     if (!numberExistsInArray) {
-        const randomIndex = Math.floor(Math.random() * 9);
+        const randomIndex = Math.floor(
+            Math.random() * valuesInArray.length - 1
+        );
         valuesInArray[randomIndex] = valueToFindInArray + 1;
     }
     return valuesInArray;
